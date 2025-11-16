@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Cardápio – Cupcakes Gourmet{% endblock %}
+
+{% block content %}
+<h2>Cardápio de Cupcakes</h2>
+
+<div class="grid">
+  {% for cupcake in cupcakes %}
+  <article class="card">
+    <h3>{{ cupcake.name }}</h3>
+    <p class="card-description">{{ cupcake.description }}</p>
+    <p class="card-price">R$ {{ '%.2f'|format(cupcake.price) }}</p>
+
+    <form action="/order" method="post" class="order-form">
+      <input type="hidden" name="cupcake_id" value="{{ cupcake.id }}" />
+
+      <label>
+        Seu nome:
+        <input type="text" name="customer_name" required />
+      </label>
+
+      <label>
+        Telefone/WhatsApp:
+        <input type="text" name="customer_phone" required />
+      </label>
+
+      <label>
+        Quantidade:
+        <input type="number" name="quantity" min="1" value="1" required />
+      </label>
+
+      <label>
+        Forma de entrega:
+        <select name="delivery_type" required>
+          <option value="retirada">Retirada na loja</option>
+          <option value="delivery">Delivery</option>
+        </select>
+      </label>
+
+      <button type="submit" class="btn">Fazer pedido</button>
+    </form>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

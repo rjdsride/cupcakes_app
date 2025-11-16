@@ -1,1 +1,30 @@
 
+{% extends "base.html" %}
+
+{% block title %}Pedido – Cupcakes Gourmet{% endblock %}
+
+{% block content %}
+{% if success %}
+<section class="success">
+  <h2>Pedido realizado com sucesso!</h2>
+  <p><strong>Cliente:</strong> {{ customer_name }} – {{ customer_phone }}</p>
+  <p><strong>Cupcake:</strong> {{ cupcake.name }}</p>
+  <p><strong>Quantidade:</strong> {{ quantity }}</p>
+  <p><strong>Entrega:</strong> {{ delivery_type | capitalize }}</p>
+  <p><strong>Valor total:</strong> R$ {{ '%.2f'|format(total) }}</p>
+
+  <p class="info">
+    Este é um protótipo acadêmico. O pagamento ainda não é processado
+    automaticamente.
+  </p>
+
+  <a href="/menu" class="btn">Fazer outro pedido</a>
+</section>
+{% else %}
+<section class="error">
+  <h2>Erro ao processar o pedido</h2>
+  <p>{{ message }}</p>
+  <a href="/menu" class="btn">Voltar ao cardápio</a>
+</section>
+{% endif %}
+{% endblock %}
