@@ -8,6 +8,3 @@ app = FastAPI(title="Cupcakes Gourmet App")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 app.include_router(web_router)
-
-
-# uvicorn app.main:app --reload
