@@ -41,11 +41,12 @@ def get_cupcake_by_id(cupcake_id: int) -> Cupcake | None:
     return None
 
 
+
 DATABASE_URL = "sqlite:///./cupcakes.db"
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False}, 
+    connect_args={"check_same_thread": False},
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -63,6 +64,7 @@ class Order(Base):
     quantity = Column(Integer, nullable=False)
     delivery_type = Column(String, nullable=False)
     total = Column(Float, nullable=False)
+    notes = Column(String, nullable=True)
 
 
 def init_db() -> None:

@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Pedido – Cupcakes Gourmet{% endblock %}
@@ -7,15 +6,24 @@
 {% if success %}
 <section class="success">
   <h2>Pedido realizado com sucesso!</h2>
+
+  {% if order_id %}
+  <p><strong>Código do pedido:</strong> #{{ order_id }}</p>
+  {% endif %}
+
   <p><strong>Cliente:</strong> {{ customer_name }} – {{ customer_phone }}</p>
   <p><strong>Cupcake:</strong> {{ cupcake.name }}</p>
   <p><strong>Quantidade:</strong> {{ quantity }}</p>
   <p><strong>Entrega:</strong> {{ delivery_type | capitalize }}</p>
   <p><strong>Valor total:</strong> R$ {{ '%.2f'|format(total) }}</p>
 
+  {% if notes %}
+  <p><strong>Observações:</strong> {{ notes }}</p>
+  {% endif %}
+
   <p class="info">
     Este é um protótipo acadêmico. O pagamento ainda não é processado
-    automaticamente.
+    automaticamente. Utilize o código do pedido para referência interna.
   </p>
 
   <a href="/menu" class="btn">Fazer outro pedido</a>

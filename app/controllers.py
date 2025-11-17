@@ -38,6 +38,7 @@ async def create_order(
     cupcake_id: int = Form(...),
     quantity: int = Form(...),
     delivery_type: str = Form(...),
+    notes: str = Form(""),  
 ):
     cupcake = get_cupcake_by_id(cupcake_id)
     if cupcake is None:
@@ -62,9 +63,12 @@ async def create_order(
             quantity=quantity,
             delivery_type=delivery_type,
             total=total,
+            notes=notes or None,
         )
         db.add(order)
         db.commit()
+        db.refresh(order)  
+        order_id = order.id
     finally:
         db.close()
 
@@ -73,11 +77,13 @@ async def create_order(
         {
             "request": request,
             "success": True,
+            "order_id": order_id,
             "customer_name": customer_name,
             "customer_phone": customer_phone,
             "cupcake": cupcake,
             "quantity": quantity,
             "delivery_type": delivery_type,
             "total": total,
+            "notes": notes,
         },
     )

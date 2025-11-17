@@ -22,7 +22,14 @@
 
       <label>
         Telefone/WhatsApp:
-        <input type="text" name="customer_phone" required />
+        <input
+          type="tel"
+          name="customer_phone"
+          required
+          placeholder="(99) 99999-9999"
+          pattern="\d{10,11}"
+          title="Informe apenas números, com DDD (10 ou 11 dígitos)"
+        />
       </label>
 
       <label>
@@ -38,7 +45,16 @@
         </select>
       </label>
 
-      <button type="submit" class="btn">Fazer pedido</button>
+      <label>
+        Observações (opcional):
+        <textarea
+          name="notes"
+          rows="3"
+          placeholder="Ex.: sem cobertura, pedido de aniversário, horário preferencial..."
+        ></textarea>
+      </label>
+
+      <button type="submit" class="btn btn-primary">Fazer pedido</button>
     </form>
   </article>
   {% endfor %}
