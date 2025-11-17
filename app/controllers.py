@@ -2,7 +2,12 @@ from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from .models import CUPCAKES, get_cupcake_by_id
+from .models import (
+    CUPCAKES,
+    get_cupcake_by_id,
+    SessionLocal,
+    Order,
+)
 
 router = APIRouter()
 
@@ -47,6 +52,21 @@ async def create_order(
         )
 
     total = cupcake.price * quantity
+
+    db = SessionLocal()
+    try:
+        order = Order(
+            customer_name=customer_name,
+            customer_phone=customer_phone,
+            cupcake_name=cupcake.name,
+            quantity=quantity,
+            delivery_type=delivery_type,
+            total=total,
+        )
+        db.add(order)
+        db.commit()
+    finally:
+        db.close()
 
     return templates.TemplateResponse(
         "order_success.html",
